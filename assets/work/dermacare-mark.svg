@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="t">
+  <title id="t">DermaCare</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071D36"/>
+      <stop offset="0.55" stop-color="#0B2A4A"/>
+      <stop offset="1" stop-color="#123E73"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.56" r="0.5">
+      <stop offset="0" stop-color="#4FD1C1" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#4FD1C1" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="drop" x1="0.25" y1="0.1" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#8FEADF"/>
+      <stop offset="0.45" stop-color="#2FB5A6"/>
+      <stop offset="1" stop-color="#0A6E66"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4FD1C1" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#C9F5EE" stop-opacity="1"/>
+      <stop offset="1" stop-color="#4FD1C1" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blur" x="-50%" y="-200%" width="200%" height="500%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="232" fill="url(#bg)"/>
+  <circle cx="512" cy="560" r="400" fill="url(#glow)"/>
+
+  <!-- scanner viewfinder -->
+  <g fill="none" stroke="#FFFFFF" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.92">
+    <path d="M232 352 V292 a60 60 0 0 1 60 -60 H352"/>
+    <path d="M672 232 H732 a60 60 0 0 1 60 60 V352"/>
+    <path d="M792 672 V732 a60 60 0 0 1 -60 60 H672"/>
+    <path d="M352 792 H292 a60 60 0 0 1 -60 -60 V672"/>
+  </g>
+
+  <!-- skin drop with care cross -->
+  <path d="M512 300 C590 400 660 470 660 576 A148 148 0 0 1 364 576 C364 470 434 400 512 300 Z" fill="url(#drop)"/>
+  <path d="M512 300 C590 400 660 470 660 576 A148 148 0 0 1 364 576 C364 470 434 400 512 300 Z" fill="none" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="6"/>
+  <ellipse cx="458" cy="470" rx="34" ry="62" transform="rotate(28 458 470)" fill="#FFFFFF" fill-opacity="0.35"/>
+  <path d="M512 532 V652 M452 592 H572" stroke="#FFFFFF" stroke-width="40" stroke-linecap="round"/>
+
+  <!-- scan beam -->
+  <rect x="262" y="640" width="500" height="26" rx="13" fill="url(#beam)" filter="url(#blur)" opacity="0.9"/>
+  <rect x="282" y="649" width="460" height="8" rx="4" fill="url(#beam)"/>
+</svg>
