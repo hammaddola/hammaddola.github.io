@@ -7,20 +7,6 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(pointer: fine)').matches;
 
-  // ── Theme (remembered per visitor; storage can be unavailable) ──────────
-  const store = {
-    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
-    set(k, v) { try { localStorage.setItem(k, v); } catch { /* ignore */ } },
-  };
-  const saved = store.get('theme');
-  if (saved) root.dataset.theme = saved;
-  else if (matchMedia('(prefers-color-scheme: light)').matches) root.dataset.theme = 'light';
-  document.querySelector('.theme-toggle')?.addEventListener('click', () => {
-    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-    root.dataset.theme = next;
-    store.set('theme', next);
-  });
-
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // ── Reveal on scroll, staggered within each section ─────────────────────
@@ -130,44 +116,4 @@
     setTimeout(() => { label.textContent = 'Copy email'; btn.classList.remove('copied'); }, 2200);
   });
 
-  // ── Aurora background (canvas, paused when the tab is hidden) ───────────
-  const canvas = document.getElementById('aurora');
-  if (!canvas || reduce) return;
-  const ctx = canvas.getContext('2d');
-  let w, h, dpr;
-  const blobs = [
-    { x: 0.15, y: 0.15, r: 0.55, c: [79, 209, 193], a: 0.16, s: 0.00011 },
-    { x: 0.85, y: 0.25, r: 0.5, c: [29, 111, 216], a: 0.16, s: 0.00008 },
-    { x: 0.6, y: 0.85, r: 0.6, c: [91, 71, 176], a: 0.11, s: 0.00006 },
-  ];
-  const resize = () => {
-    dpr = Math.min(devicePixelRatio || 1, 1.5);
-    w = canvas.width = innerWidth * dpr;
-    h = canvas.height = innerHeight * dpr;
-  };
-  resize();
-  addEventListener('resize', resize);
-  let running = true;
-  document.addEventListener('visibilitychange', () => {
-    running = !document.hidden;
-    if (running) requestAnimationFrame(draw);
-  });
-  function draw(t) {
-    if (!running) return;
-    ctx.clearRect(0, 0, w, h);
-    const light = root.dataset.theme === 'light';
-    for (const b of blobs) {
-      const x = (b.x + Math.sin(t * b.s * 6.3) * 0.08) * w;
-      const y = (b.y + Math.cos(t * b.s * 5.1) * 0.08) * h;
-      const r = b.r * Math.max(w, h);
-      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-      const a = light ? b.a * 0.6 : b.a;
-      g.addColorStop(0, `rgba(${b.c.join(',')},${a})`);
-      g.addColorStop(1, `rgba(${b.c.join(',')},0)`);
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, w, h);
-    }
-    requestAnimationFrame(draw);
-  }
-  requestAnimationFrame(draw);
 })();
