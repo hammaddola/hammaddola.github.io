@@ -50,8 +50,16 @@ svg { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-wi
   background: rgba(255, 255, 255, .88); border-bottom: 1px solid var(--line);
   backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%);
 }
-.brand { display: flex; align-items: center; gap: 10px; font: 700 19px/1 var(--display); color: var(--ink); letter-spacing: -0.02em; }
-.brand img { border-radius: 9px; }
+.brand { display: flex; align-items: center; gap: 12px; color: var(--ink); }
+/* Logo: HA monogram + rule + wordmark (Sora / JetBrains Mono). */
+.brand-mark { flex: none; fill: currentColor; transition: transform .4s var(--ease); }
+.brand-mark .brand-accent { fill: var(--blue); }
+.brand:hover .brand-mark { transform: translateY(-1px) scale(1.04); }
+.brand-rule { width: 1.5px; height: 30px; background: #D5D9E0; }
+.brand-text { display: flex; flex-direction: column; gap: 5px; }
+.brand-name { font: 600 16px/1 'Sora', var(--display); letter-spacing: .08em; }
+.brand-role { font: 500 8.5px/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .3em; color: #4A5468; }
+@media (max-width: 400px) { .brand-role { display: none; } .brand-rule { height: 22px; } }
 .nav-links { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; }
 .nav-links a { padding: 8px 14px; border-radius: 8px; color: var(--text); font-weight: 500; font-size: 15px; transition: color .2s, background .2s; }
 .nav-links a:hover { color: var(--ink); background: var(--tint); }

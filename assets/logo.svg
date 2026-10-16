@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 140" role="img" aria-label="Hammad Ali, Software Developer">
+  <g fill="#0A1F44">
+    <rect x="0" y="20" width="16" height="100"/>
+    <polygon points="36,120 52,120 84,20 68,20"/>
+    <rect x="0" y="66" width="94" height="14"/>
+  </g>
+  <polygon points="68,20 84,20 116,120 100,120" fill="#1D4ED8"/>
+  <rect x="146" y="22" width="2" height="96" fill="#D5D9E0"/>
+  <text x="178" y="76" font-family="Sora, sans-serif" font-weight="600" font-size="44" letter-spacing="3.5" fill="#0A1F44">HAMMAD ALI</text>
+  <text x="179" y="108" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="14" letter-spacing="4.5" fill="#4A5468">SOFTWARE DEVELOPER</text>
+</svg>
