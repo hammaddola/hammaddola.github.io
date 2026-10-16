@@ -302,3 +302,29 @@ a.contact-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg)
 }
 
 @media (min-width: 1021px) { .project:last-child { flex-direction: row-reverse; } }
+
+/* ── Motion layer (GSAP + Lenis) ─────────────────────────────────────────── */
+/* GSAP owns entrances when it loaded; the CSS reveal fallback stands down. */
+.gsap .reveal { opacity: 1; transform: none; transition: none; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Rotating hero word: solid blue, underlined by a solid bar. */
+.hero h1 .rotator { perspective: 600px; overflow: hidden; padding-bottom: .08em; }
+.rotator-word { display: inline-block; color: var(--blue); position: relative; transform-origin: 50% 100%; will-change: transform, opacity; }
+.rotator-word::after { content: ''; position: absolute; left: 0; right: 0; bottom: .02em; height: .09em; background: var(--blue); border-radius: 2px; opacity: .18; }
+
+/* Process line: faint track + solid fill that draws on scroll. */
+.process::before { background: #DCE3F0; }
+.process li.process-line { position: absolute; top: 26px; left: 26px; right: 26px; height: 2px; padding: 0; min-height: 0; background: var(--blue); transform-origin: 0 50%; z-index: 0; }
+.process li:not(.process-line) { z-index: 1; }
+@media (max-width: 1020px) {
+  .process li.process-line { top: 26px; bottom: 26px; right: auto; width: 2px; height: auto; transform-origin: 50% 0; }
+}
+
+/* Pinned horizontal gallery on desktop. */
+.gallery-pin { overflow: hidden; }
+.gallery.is-pinned { overflow: visible; scroll-snap-type: none; padding-right: 40px; will-change: transform; }
+
+.marquee-track { will-change: transform; }

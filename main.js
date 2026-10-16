@@ -9,8 +9,13 @@
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  // GSAP (motion.js) drives reveals and counters when it loaded and motion is
+  // allowed; this file keeps a lightweight fallback for everything else.
+  const gsapOn = !!(window.gsap && window.ScrollTrigger) && !reduce;
+  if (gsapOn) root.classList.add('gsap');
+
   // ── Reveal on scroll, staggered within each section ─────────────────────
-  const reveals = [...document.querySelectorAll('.reveal')];
+  const reveals = gsapOn ? [] : [...document.querySelectorAll('.reveal')];
   reveals.forEach((el) => {
     const siblings = [...el.parentElement.children].filter((c) => c.classList.contains('reveal'));
     el.style.setProperty('--d', `${Math.min(siblings.indexOf(el), 5) * 0.08}s`);
@@ -27,7 +32,7 @@
   }
 
   // ── Count-up numbers ────────────────────────────────────────────────────
-  const counters = document.querySelectorAll('[data-count]');
+  const counters = gsapOn ? [] : document.querySelectorAll('[data-count]');
   const runCount = (el) => {
     const target = +el.dataset.count;
     if (reduce) { el.textContent = target; return; }
