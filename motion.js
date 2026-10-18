@@ -51,7 +51,7 @@
     });
 
     // ── Cards flip up in 3D, in sequence ─────────────────────────────────
-    const cardSets = ['.case-grid', '.projects', '.services', '.values', '.contact-grid', '.tags'];
+    const cardSets = ['.case-grid', '.trust-grid', '.projects', '.services', '.values', '.contact-grid', '.tags'];
     cardSets.forEach((sel) => {
       const set = document.querySelector(sel);
       if (!set) return;
