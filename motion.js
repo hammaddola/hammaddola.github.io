@@ -1,8 +1,8 @@
-// Motion layer: GSAP 3.13 (ScrollTrigger + SplitText) and Lenis smooth scroll.
+// Motion layer: GSAP 3.13 (ScrollTrigger + SplitText).
 // Loaded after main.js. If the libraries didn't load, or the visitor prefers
 // reduced motion, this file does nothing and main.js's fallback stays in charge.
 (() => {
-  const { gsap, ScrollTrigger, SplitText, Lenis } = window;
+  const { gsap, ScrollTrigger, SplitText } = window;
   if (!gsap || !ScrollTrigger || !document.documentElement.classList.contains('gsap')) return;
   gsap.registerPlugin(ScrollTrigger, ...(SplitText ? [SplitText] : []));
 
@@ -14,22 +14,7 @@
     const { motion, desktop } = ctx.conditions;
     if (!motion) return;
 
-    // ── Smooth scroll (Lenis) kept in sync with ScrollTrigger ────────────
-    let lenis;
-    if (Lenis) {
-      lenis = new Lenis({ duration: 1.1, smoothWheel: true });
-      lenis.on('scroll', ScrollTrigger.update);
-      const raf = (t) => lenis.raf(t * 1000);
-      gsap.ticker.add(raf);
-      gsap.ticker.lagSmoothing(0);
-      // In-page links scroll smoothly too.
-      document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -70 }); }
-      }));
-    }
-
-    // ── Hero: headline words rise in, then the rotating word cycles ──────
+    // ── Hero: headline words rise in ─────────────────────────────────────
     const hero = gsap.timeline({ defaults: { ease: 'power3.out' } });
     const status = document.querySelector('.hero .status');
     const lines = gsap.utils.toArray('.hero-title .line');
@@ -40,28 +25,12 @@
       hero.from(lines, { y: 40, opacity: 0, duration: 0.7, stagger: 0.1 }, 0.1);
     }
     hero
-      .from('.rotator', { yPercent: 60, opacity: 0, duration: 0.7 }, 0.35)
       .from(status, { y: -12, opacity: 0, duration: 0.5 }, 0)
       .from('.hero .lead', { y: 24, opacity: 0, duration: 0.7 }, 0.55)
       .from('.hero .cta-row > *', { y: 20, opacity: 0, duration: 0.6, stagger: 0.08 }, 0.7)
       .from('.hero-meta li', { y: 12, opacity: 0, duration: 0.5, stagger: 0.06 }, 0.85)
       .from('.hero-visual .phone', { y: 80, rotationX: 18, rotationY: -14, opacity: 0, duration: 1.1, ease: 'expo.out' }, 0.3)
       .from('.hero-visual .float-chip', { scale: 0.6, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'back.out(2)' }, 0.9);
-
-    const words = ['AI products', 'mobile apps', 'LMS platforms', 'web apps', 'LLM assistants'];
-    const rot = document.querySelector('.rotator-word');
-    if (rot) {
-      let i = 0;
-      const cycle = gsap.timeline({ repeat: -1, delay: 2.2 });
-      words.forEach(() => {
-        cycle
-          .to(rot, { yPercent: -100, opacity: 0, rotationX: 50, duration: 0.45, ease: 'power2.in',
-            onComplete: () => { i = (i + 1) % words.length; rot.textContent = words[i]; } })
-          .fromTo(rot, { yPercent: 100, opacity: 0, rotationX: -50 },
-            { yPercent: 0, opacity: 1, rotationX: 0, duration: 0.55, ease: 'power3.out' })
-          .to({}, { duration: 1.6 });
-      });
-    }
 
     // Hero phone drifts with scroll (parallax depth).
     gsap.to('.hero-visual .phone', {
@@ -93,18 +62,9 @@
       });
     });
 
-    // ── Stats count up ───────────────────────────────────────────────────
+    // ── Stats rise in ───────────────────────────────────────────────────
     gsap.from('.stat', { y: 30, opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out',
       scrollTrigger: { trigger: '.proof', start: 'top 85%' } });
-    document.querySelectorAll('[data-count]').forEach((el) => {
-      const target = +el.dataset.count;
-      const obj = { v: 0 };
-      gsap.to(obj, {
-        v: target, duration: 1.6, ease: 'power2.out',
-        onUpdate: () => { el.textContent = Math.round(obj.v); },
-        scrollTrigger: { trigger: el, start: 'top 90%' },
-      });
-    });
 
     // ── Process: the line draws itself as you scroll, steps pop in ───────
     const line = document.querySelector('.process-line');
@@ -142,23 +102,11 @@
       });
     }
 
-    // ── Marquee reacts to scroll speed (skew + speed boost) ──────────────
-    const marquee = document.querySelector('.marquee-track');
-    if (marquee) {
-      const skew = gsap.quickTo(marquee, 'skewX', { duration: 0.4, ease: 'power3' });
-      ScrollTrigger.create({
-        onUpdate: (self) => skew(gsap.utils.clamp(-8, 8, self.getVelocity() / -300)),
-      });
-      marquee.style.animationDuration = '40s';
-    }
-
     // ── Contact card rises with a soft scale ─────────────────────────────
     gsap.from('.contact-card', {
       y: 60, scale: 0.96, opacity: 0, duration: 1, ease: 'expo.out',
       scrollTrigger: { trigger: '.contact', start: 'top 80%' },
     });
-
-    return () => { if (lenis) lenis.destroy(); };
   });
 
   // Images and fonts change layout height; recalc trigger positions after load.

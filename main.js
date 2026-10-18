@@ -1,5 +1,5 @@
-// Portfolio interactions: theme, reveal-on-scroll, counters, tilt, magnetic
-// buttons, card spotlight, scroll progress, aurora background.
+// Portfolio interactions: mobile menu, reveal-on-scroll, hero phone tilt,
+// card spotlight and scroll progress.
 // Everything degrades gracefully and honours prefers-reduced-motion.
 (() => {
   const root = document.documentElement;
@@ -9,7 +9,7 @@
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // GSAP (motion.js) drives reveals and counters when it loaded and motion is
+  // GSAP (motion.js) drives reveals when it loaded and motion is
   // allowed; this file keeps a lightweight fallback for everything else.
   const gsapOn = !!(window.gsap && window.ScrollTrigger) && !reduce;
   if (gsapOn) root.classList.add('gsap');
@@ -31,25 +31,17 @@
     reveals.forEach((el) => io.observe(el));
   }
 
-  // ── Count-up numbers ────────────────────────────────────────────────────
-  const counters = gsapOn ? [] : document.querySelectorAll('[data-count]');
-  const runCount = (el) => {
-    const target = +el.dataset.count;
-    if (reduce) { el.textContent = target; return; }
-    const start = performance.now(), dur = 1400;
-    const tick = (t) => {
-      const p = Math.min((t - start) / dur, 1);
-      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
+  // ── Mobile menu ─────────────────────────────────────────────────────────
+  const nav = document.querySelector('.nav');
+  const toggle = document.querySelector('.menu-toggle');
+  const setMenu = (open) => {
+    nav.classList.toggle('menu-open', open);
+    toggle.setAttribute('aria-expanded', open);
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
   };
-  if ('IntersectionObserver' in window) {
-    const co = new IntersectionObserver((entries) => entries.forEach((e) => {
-      if (e.isIntersecting) { runCount(e.target); co.unobserve(e.target); }
-    }), { threshold: 0.6 });
-    counters.forEach((c) => co.observe(c));
-  } else counters.forEach(runCount);
+  toggle?.addEventListener('click', () => setMenu(!nav.classList.contains('menu-open')));
+  nav.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
 
   // ── Scroll progress + active nav link ───────────────────────────────────
   const bar = document.querySelector('.progress');
@@ -77,26 +69,6 @@
       phone.style.transform = `rotateY(${x * 18}deg) rotateX(${-y * 14}deg) translateZ(10px)`;
     });
     visual?.addEventListener('pointerleave', () => { phone.style.transform = ''; });
-
-    // Magnetic buttons
-    document.querySelectorAll('.magnetic').forEach((btn) => {
-      btn.addEventListener('pointermove', (e) => {
-        const r = btn.getBoundingClientRect();
-        btn.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.18}px, ${(e.clientY - r.top - r.height / 2) * 0.25}px)`;
-      });
-      btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
-    });
-
-    // 3D tilt for the service cards
-    document.querySelectorAll('.tilt-card').forEach((card) => {
-      card.addEventListener('pointermove', (e) => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `perspective(900px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateY(-4px)`;
-      });
-      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-    });
 
     // Spotlight that follows the cursor across cards
     document.querySelectorAll('.spotlight').forEach((card) => {
