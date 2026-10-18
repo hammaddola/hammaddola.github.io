@@ -241,10 +241,16 @@ main { width: 100%; }
 .process p { color: var(--text); font-size: 15.5px; }
 
 /* ── About ──────────────────────────────────────────────────────────────── */
-.section.about { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 56px; align-items: start; padding-inline: max(16px, calc((100% - 1160px) / 2)); }
+.section.about { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 64px; align-items: center; padding-inline: max(16px, calc((100% - 1160px) / 2)); }
 .section.about > * { width: auto; margin: 0; }
 .about-copy p:not(.eyebrow) { margin-top: 20px; font-size: 18px; }
-.values { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+.about-photo { position: relative; margin: 0; max-width: 440px; }
+.about-photo::before { content: ''; position: absolute; inset: 22px -18px -18px 22px; border-radius: 28px; background: linear-gradient(160deg, var(--navy-700), var(--navy-900)); transform: rotate(3deg); z-index: 0; }
+.about-photo img { position: relative; z-index: 1; width: 100%; height: auto; border-radius: 24px; box-shadow: var(--shadow-lg); }
+.photo-chip { position: absolute; z-index: 2; left: -18px; bottom: 34px; display: flex; align-items: center; gap: 12px; padding: 12px 18px 12px 14px; border-radius: 14px; background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.photo-chip b { display: block; font: 700 15px/1.2 var(--display); color: var(--ink); }
+.photo-chip span:last-child { font-size: 13px; line-height: 1.3; color: var(--muted); }
+.values { list-style: none; padding: 0; margin: 32px 0 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
 .values li { padding: 20px 22px 20px 24px; border-radius: 14px; background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow-sm); display: grid; gap: 4px; border-left: 4px solid var(--navy-800); transition: transform .3s var(--ease), border-color .3s; }
 .values li:hover { transform: translateX(4px); border-left-color: var(--blue); }
 .values b { font: 700 17px/1.3 var(--display); color: var(--ink); }
@@ -258,6 +264,10 @@ main { width: 100%; }
 .contact .eyebrow::before { background: #8FB1FF; }
 .contact h2 { color: #fff; }
 .contact .lead { color: #C3CFE4; }
+.contact-person { display: flex; align-items: center; gap: 16px; margin-top: 26px; max-width: 620px; }
+.contact-person img { width: 56px; height: 56px; border-radius: 50%; border: 2px solid rgba(255,255,255,.7); flex: none; object-fit: cover; }
+.contact-person p { color: #C3CFE4; font-size: 15.5px; line-height: 1.55; }
+.contact-person b { color: #fff; }
 .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 38px; }
 .contact-item { display: flex; align-items: center; gap: 16px; padding: 20px 22px; font-weight: 600; color: var(--ink); }
 .contact-item > svg { width: 44px; height: 44px; padding: 11px; border-radius: 12px; color: #fff; background: var(--navy-800); }
@@ -285,7 +295,8 @@ a.contact-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg)
   .process { grid-template-columns: 1fr; gap: 28px; }
   .process::before { top: 26px; bottom: 26px; left: 26px; right: auto; width: 2px; height: auto; background: linear-gradient(180deg, var(--navy-800), var(--blue), #C7D4EE); }
   .process li { padding: 6px 0 0 80px; min-height: 54px; }
-  .section.about { grid-template-columns: 1fr; gap: 34px; }
+  .section.about { grid-template-columns: 1fr; gap: 48px; }
+  .section.about .about-photo { max-width: 360px; margin: 0 auto; }
   .proof { grid-template-columns: repeat(2, 1fr); }
   .stat { padding: 32px 22px; }
   .stat:nth-child(3) { border-left: 0; padding-left: 0; }
@@ -297,7 +308,9 @@ a.contact-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg)
   .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 2px; padding: 10px 16px 16px; background: var(--white); border-bottom: 1px solid var(--line); box-shadow: var(--shadow); }
   .menu-open .nav-links { display: flex; }
   .nav-links a { display: block; padding: 12px 14px; font-size: 16px; }
-  .case-grid, .services, .contact-grid { grid-template-columns: 1fr; }
+  .case-grid, .services, .contact-grid, .values { grid-template-columns: 1fr; }
+  .section.about .about-photo { max-width: 300px; }
+  .photo-chip { left: -8px; }
   .hero-visual { min-height: 400px; }
   .hero-visual::before, .hero-visual::after { width: 250px; height: 340px; }
   .phone { width: 180px; padding: 7px; border-radius: 30px; }
