@@ -93,4 +93,23 @@
     setTimeout(() => { label.textContent = 'Copy email'; btn.classList.remove('copied'); }, 2200);
   });
 
+  // ── Project-plan form: composes a WhatsApp or email message ─────────────
+  // No backend: answers go straight into the visitor's own WhatsApp/email.
+  const plan = document.getElementById('plan');
+  plan?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = new FormData(plan);
+    const msg = [
+      "Hi Hammad, I'd like a fixed-price project plan.",
+      `What I want to build: ${f.get('idea').trim()}`,
+      `Target launch: ${f.get('when') || 'Not sure yet'}`,
+      `Budget: ${f.get('budget') || 'Not sure yet'}`,
+    ].join('\n');
+    if (e.submitter?.dataset.via === 'email') {
+      location.href = `mailto:buildwithhammad@gmail.com?subject=${encodeURIComponent('Project plan request')}&body=${encodeURIComponent(msg)}`;
+    } else {
+      window.open(`https://wa.me/923157679143?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+    }
+  });
+
 })();
