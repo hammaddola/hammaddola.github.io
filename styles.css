@@ -116,6 +116,9 @@ main { width: 100%; }
 .hero-meta { display: flex; flex-wrap: wrap; gap: 10px 24px; list-style: none; padding: 0; margin: 36px 0 0; color: var(--muted); font-size: 15px; }
 .hero-meta li { display: inline-flex; align-items: center; gap: 8px; }
 .hero-meta svg { color: var(--blue); }
+.terms { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 22px 0 0; }
+.terms li { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; font-size: 15px; font-weight: 600; color: #fff; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); }
+.terms svg { color: #8FB1FF; }
 
 .hero-visual { position: relative; display: grid; place-items: center; min-height: 600px; perspective: 1200px; }
 .hero-visual::before, .hero-visual::after {
